@@ -1,32 +1,38 @@
-name: Build Number Bot APK
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
 
-on:
-  workflow_dispatch:
+android {
+    namespace = "com.example.numberbot"
+    compileSdk = 35
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    defaultConfig {
+        applicationId = "com.example.numberbot"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+    }
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.7'
+    buildFeatures {
+        viewBinding = true
+    }
+}
 
-      - name: Build Debug APK
-        run: gradle :app:assembleDebug --no-daemon
+dependencies {
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: NumberBot-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+}
