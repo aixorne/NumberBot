@@ -2,9 +2,6 @@ name: Build Number Bot APK
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build:
