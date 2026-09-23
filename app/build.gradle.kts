@@ -1,25 +1,34 @@
-android {
-    namespace = "com.example.numberbot"
-    compileSdk = 35
+name: Build Number Bot APK
 
-    defaultConfig {
-        applicationId = "com.example.numberbot"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-    }
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    buildFeatures {
-        viewBinding = true
-    }
-}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      - name: Build Debug APK
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NumberBot-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
