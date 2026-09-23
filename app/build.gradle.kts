@@ -3,7 +3,8 @@ name: Build Number Bot APK
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
@@ -17,12 +18,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.7"
+          gradle-version: '8.7'
 
       - name: Build Debug APK
         run: gradle :app:assembleDebug --no-daemon
