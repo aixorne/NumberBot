@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Number Bot</string>
+    <string name="accessibility_description">Allows Number Bot to tap detected numbers automatically.</string>
+</resources>
