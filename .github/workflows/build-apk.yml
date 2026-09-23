@@ -2,8 +2,6 @@ name: Build Number Bot APK
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -21,7 +19,8 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-        with: gradle-version: '8.7'
+        with:
+          gradle-version: '8.7'
 
       - name: Build Debug APK
         run: gradle :app:assembleDebug --no-daemon
